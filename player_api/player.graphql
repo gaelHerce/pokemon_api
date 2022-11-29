@@ -1,0 +1,84 @@
+type Mutation{
+    changeUserName(_token: String!, _newName: String!): MutationResult
+    changePwd(_token: String!, _newPwd: String!): MutationResult
+    addCredits(_token: String!, _credits: Int!): MutationResult
+    addPokemon(_token:String!, _pokemonId: Int!): MutationResult
+    sendMessage(_token: String!, _message:String!, _receiverId: Int!): MutationResult
+}
+
+type Query{
+    getPlayerList: PlayersResult
+    getPersonalInformation(_token: String!): PlayerResult
+    getConversation(_token:String!, _otherPlayerId: Int!):MessagesResult
+    getReceivedMessages(_token: String!): MessagesResult
+    getInvitations(_token: String!): InvitationsResult
+    playerExist(_token: String!): BoolResult
+}
+
+type BoolResult{
+    response: Boolean!
+    error: String
+}
+
+type MutationResult{
+    success: String
+    error: String
+}
+
+type MessagesResult{
+    messages: [Message]
+    error: String
+}
+
+type Message{
+    sender: Int!
+    receiver: Int!
+    text: String!
+}
+
+type BadgesResult{
+    badges: [Badge]
+    error: String
+}
+
+type Badge{
+    id: Int!
+    description: String!
+}
+
+type InvitationsResult{
+    invitations: [Invitation]
+    error: String
+}
+
+type Invitation{
+    sender: Int!
+    receiver: Int
+    matchId: Int!
+}
+
+type PlayerResult{
+    player: Player
+    error: String
+}
+
+type PlayersResult{
+    players: [Player]
+    error: String
+}
+
+type Player{
+    id:Int
+    userName: String!
+    credits: Int!
+    badges: [Badge]!
+    pokemons: [Pokemon]
+}
+
+type Pokemon {
+    id: Int!
+    type: String!
+    name: String!
+    att: Int!
+    pv: Int!
+}

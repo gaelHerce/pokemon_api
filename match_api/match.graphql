@@ -1,0 +1,47 @@
+type Query{
+    getMatchList(_token:String!): MatchsResult
+    getMatch(_matchId:Int!, _token:String!): MatchResult
+    getRoundsFromMatchId(_matchId:Int!, _token:String!): RoundsResult
+}
+
+type Mutation{
+    createMatch(_token:String!, _receiverId:Int):MutationResult
+    acceptMatch(_token:String!, _matchId:Int!):MutationResult
+    deleteMatch(_token:String!, _matchId:Int!):MutationResult
+    playerAddsPokemon(_token:String!, _matchId:Int!, _pokemonId:Int!): MutationResult
+}
+
+type MatchsResult{
+    matchs: [Match]
+    error: String
+}
+
+type MatchResult{
+    match: Match
+    error: String
+}
+
+type Match{
+    id:Int!
+    status:Int!
+    sender:Int!
+    receiver:Int
+    winner:Int
+}
+
+type RoundsResult{
+    rounds: [Round]
+    error: String
+}
+
+type Round{
+    roundIndex:Int!
+    creatorPokemon:Int
+    receiverPokemon:Int
+    winner:Int
+}
+
+type MutationResult{
+    success: String
+    error: String
+}

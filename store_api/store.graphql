@@ -1,0 +1,31 @@
+type Mutation{
+   buyPokemon(_token: String!, _pokemonId: Int!): MutationResult
+}
+
+type Query{
+    getAvailablePokemons(_token:String): PokemonInStoreResult
+}
+
+type Pokemon {
+    id: Int!
+    type: String!
+    name: String!
+    att: Int!
+    pv: Int!
+}
+
+type PokemonsInStore {
+    pokemon: Pokemon
+    price: Int!
+    quantity: Int!
+}
+
+type PokemonInStoreResult{
+    pokemons: [PokemonsInStore]
+    error: String
+}
+
+type MutationResult{
+    success: String
+    error: String
+}

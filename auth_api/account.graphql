@@ -1,0 +1,23 @@
+type Mutation {
+    createAccount(_role: String!, _userName:String!, _pwd:String!): MutationResult 
+    disconnect(_token: String!): MutationResult
+}
+
+type Query {
+    connect(_userName:String!, _pwd:String!):ConnectResult 
+    getId(_token: String!): Int
+    isConnected(_token: String!): Boolean
+}
+
+type MutationResult {
+    success: String
+    error: String
+}
+
+type ConnectResult {
+    error: String
+    token: String
+}
+
+
+
