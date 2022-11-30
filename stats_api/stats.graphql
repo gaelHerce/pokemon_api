@@ -1,0 +1,88 @@
+type Query{
+    get_statistics:Statistics
+}
+
+type Mutation{
+    match_over(matchId:Match!):String
+    reset_stats(token:String!):String
+    player_score_changed(token: String!, playerId:PlayerId!, newScore:Int!):String
+    update_player_badges(playerId:PlayerId):String
+}
+
+type Statistics{
+    matchsPerDay:[matchPerDay]
+    matchsPerPokemon:[matchPerPokemon]
+    winsPerPokemon:[winPerPokemon]
+    winsPerPlayer:[winPerPlayer]
+    loosesPerPlayer:[loosePerPlayer]
+    scoresPerPlayer:[scorePerPlayer]
+    BadgesPerPlayer:[BadgesPerPlayer]
+}
+
+type matchPerDay{
+    nbMatchs:Int!
+    date:String!
+}
+
+type matchPerPokemon{
+    nbMatchs:Int!
+    pokemonId:PokemonId!
+}
+
+type winPerPokemon{
+    nbWins:Int!
+    pokemonId:PokemonId!
+}
+
+type winPerPlayer{
+    nbWins:Int!
+    playerId:PlayerId!
+}
+
+type loosePerPlayer {
+    nbLooses:Int!
+    playerId:PlayerId!
+}
+
+type scorePerPlayer {
+    score:Int!
+    playerId:PlayerId!
+}
+
+type BadgesPerPlayer {
+    playerId:PlayerId!
+    badges:[Badge]
+}
+
+type Badge {
+    name:String!
+}
+
+type PokemonId{
+    id:Int!
+}
+
+type PlayerId{
+    id:Int!
+}
+
+type MatchId{
+    id:Int!
+}
+
+
+type Match{
+    id:MatchId!
+    status:String!
+    creator:PlayerId!
+    receiver:PlayerId
+    Rounds:[Round]
+    winner:PlayerId
+}
+
+type Round{
+    roundnum:Int!
+    creatorPokemon:PokemonId
+    receiverPokemon:PokemonId
+    winner:PlayerId
+}
