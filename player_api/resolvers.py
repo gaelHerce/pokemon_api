@@ -5,7 +5,7 @@ DB_PATH = "db/database.db"
 PORT_AUTH = 3001
 
 def responseHttp(port, query):
-    response = requests.post("http://localhost:"+str(port)+"/graphql", json={'query':query})
+    response = requests.post("http://0.0.0.0:"+str(port)+"/graphql", json={'query':query})
     dataResponse = response.json()
     return dataResponse["data"]
 

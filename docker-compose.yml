@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+  movie:
+    build: ./auth_api/
+    ports:
+      - "3001:3001"
+  showtime:
+    build: ./store_api/
+    ports:
+      - "3002:3002"
+  booking:
+    build: ./player_api/
+    ports:
+      - "3003:3003"
+  user:
+    build: ./match_api/
+    ports:
+        - "3004:3004"
+
