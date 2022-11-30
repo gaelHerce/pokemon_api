@@ -3,6 +3,7 @@ from ariadne.constants import PLAYGROUND_HTML
 from flask import Flask, request, jsonify, make_response
 import requests
 import sqlite3
+import os
 
 import resolvers as r
 
@@ -17,6 +18,7 @@ SQL_PATH = "player_api/db/init.sql"
 DB_PATH = "player_api/db/database.db"
 
 def create_db(sql_path, db_path):
+    os.remove(DB_PATH)
     with open(sql_path, 'r') as inp:
         sql_script = inp.read()
     inp.close()
@@ -36,13 +38,8 @@ query.set_field('getPlayerList', r.getPlayerList)
 query.set_field('getPersonalInformation', r.getPersonalInformation)
 query.set_field('getConversation', r.getConversation)
 query.set_field('getReceivedMessages', r.getReceivedMessages)
-query.set_field('getInvitations', r.getInvitations)
-query.set_field('playerExist', r.playerExist)
-query.set_field('getPokemonInfo', r.getPokemonInfo)
 
 mutation = MutationType()
-mutation.set_field('changeUserName', r.changeUserName)
-mutation.set_field('changePwd', r.changePwd)
 mutation.set_field('addCredits', r.addCredits)
 mutation.set_field('addPokemon', r.addPokemon)
 mutation.set_field('sendMessage', r.sendMessage)

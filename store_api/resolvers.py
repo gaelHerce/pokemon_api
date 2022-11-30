@@ -7,7 +7,7 @@ PORT_PLAYER = 3003
 DB_PATH = "store_api/db/database.db"
 
 def responseHttp(port, query):
-    response = requests.post("http://0.0.0.0:"+str(port)+"/graphql", json={'query':query})
+    response = requests.post("http://localhost:"+str(port)+"/graphql", json={'query':query})
     dataResponse = response.json()
     return dataResponse["data"]
 
@@ -18,12 +18,12 @@ def getPlayerId(_token):
     response = responseHttp(PORT_AUTH, queryId)
     return response["getId"]
 
-# ----------------- PLAYER API REQUESTS -----------------------------
-
 def playerExist(_token):
     query = "query{playerExist(_token:\""+_token+"\"){ response,error}}"
-    response = responseHttp(PORT_PLAYER, query)
+    response = responseHttp(PORT_AUTH, query)
     return response["playerExist"]
+
+# ----------------- PLAYER API REQUESTS -----------------------------
 
 def getCredits(_token):
     query = "query{getPersonalInformation(_token:\""+_token+"\"){player{credits},error}}"

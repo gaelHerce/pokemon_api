@@ -1,12 +1,22 @@
 type Mutation {
     createAccount(_role: String!, _userName:String!, _pwd:String!): MutationResult 
     disconnect(_token: String!): MutationResult
+    changeUserName(_token:String! , _newUserName: String!):MutationResult
+    changePwd(_token:String!, _newPwd: String!): MutationResult
 }
 
 type Query {
     connect(_userName:String!, _pwd:String!):ConnectResult 
     getId(_token: String!): Int
     isConnected(_token: String!): Boolean
+    getUser(_token: String!):UserResult
+    getPlayers(_token: String!):PlayersResult
+    playerExist(_token:String!):BoolResult
+}
+
+type BoolResult{
+    response: Boolean
+    error: String
 }
 
 type MutationResult {
@@ -19,5 +29,19 @@ type ConnectResult {
     token: String
 }
 
+type User{
+    pwd: String!
+    userName: String!
+    id: String!
+    role: String!
+}
 
+type UserResult{
+    user: User
+    error:String
+}
 
+type PlayersResult{
+    players: [User]
+    error: String
+}

@@ -2,6 +2,7 @@ from ariadne import graphql_sync, make_executable_schema, load_schema_from_path,
 from ariadne.constants import PLAYGROUND_HTML
 from flask import Flask, request, jsonify, make_response
 import sqlite3
+import os
 
 import resolvers as r
 
@@ -16,6 +17,7 @@ SQL_PATH = "match_api/db/init.sql"
 DB_PATH = "match_api/db/database.db"
 
 def create_db(sql_path, db_path):
+    os.remove(DB_PATH)
     with open(sql_path, 'r') as inp:
         sql_script = inp.read()
     inp.close()
@@ -36,6 +38,7 @@ query = QueryType()
 query.set_field('getMatchList', r.getMatchList)
 query.set_field('getMatch', r.getMatch)
 query.set_field('getRoundsFromMatchId',r.getRoundsFromMatchId)
+query.set_field('getInvitations', r.getInvitations)
 
 mutation = MutationType()
 mutation.set_field('createMatch', r.createMatch)

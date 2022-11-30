@@ -1,24 +1,14 @@
 type Mutation{
-    changeUserName(_token: String!, _newName: String!): MutationResult
-    changePwd(_token: String!, _newPwd: String!): MutationResult
     addCredits(_token: String!, _credits: Int!): MutationResult
     addPokemon(_token:String!, _pokemonId: Int!): MutationResult
     sendMessage(_token: String!, _message:String!, _receiverId: Int!): MutationResult
 }
 
 type Query{
-    getPlayerList: PlayersResult
+    getPlayerList(_token: String!): PlayersResult
     getPersonalInformation(_token: String!): PlayerResult
     getConversation(_token:String!, _otherPlayerId: Int!):MessagesResult
     getReceivedMessages(_token: String!): MessagesResult
-    getInvitations(_token: String!): InvitationsResult
-    playerExist(_token: String!): BoolResult
-    getPokemonInfo(_token: String!, _pokemonId: Int!): PokemonResult
-}
-
-type BoolResult{
-    response: Boolean!
-    error: String
 }
 
 type MutationResult{
@@ -45,17 +35,6 @@ type BadgesResult{
 type Badge{
     id: Int!
     description: String!
-}
-
-type InvitationsResult{
-    invitations: [Invitation]
-    error: String
-}
-
-type Invitation{
-    sender: Int!
-    receiver: Int
-    matchId: Int!
 }
 
 type PlayerResult{

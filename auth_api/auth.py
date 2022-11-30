@@ -38,10 +38,15 @@ query = QueryType()
 query.set_field('getId', r.getId)
 query.set_field('connect', r.connect)
 query.set_field('isConnected', r.isConnected)
+query.set_field('getUser', r.getUser)
+query.set_field('getPlayers', r.getPlayers)
+query.set_field('playerExist', r.playerExist)
 
 mutation = MutationType()
 mutation.set_field('createAccount', r.createAccount)
 mutation.set_field('disconnect', r.disconnect)
+mutation.set_field('changeUserName', r.changeUserName)
+mutation.set_field('changePwd', r.changePwd)
 
 
 schema = make_executable_schema(type_defs, query, mutation)

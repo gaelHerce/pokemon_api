@@ -2,6 +2,7 @@ type Query{
     getMatchList(_token:String!): MatchsResult
     getMatch(_matchId:Int!, _token:String!): MatchResult
     getRoundsFromMatchId(_matchId:Int!, _token:String!): RoundsResult
+    getInvitations(_token:String!):InvitationsResult
 }
 
 type Mutation{
@@ -9,6 +10,17 @@ type Mutation{
     acceptMatch(_token:String!, _matchId:Int!):MutationResult
     deleteMatch(_token:String!, _matchId:Int!):MutationResult
     playerAddsPokemon(_token:String!, _matchId:Int!, _pokemonId:Int!): MutationResult
+}
+
+type InvitationsResult{
+    invitations: [Invitation]
+    error: String
+}
+
+type Invitation{
+    sender: Int!
+    receiver: Int
+    matchId: Int!
 }
 
 type MatchsResult{

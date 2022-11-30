@@ -6,7 +6,7 @@ PORT_AUTH = 3001
 PORT_PLAYER = 3003
 
 def responseHttp(port, query):
-    response = requests.post("http://0.0.0.0:"+str(port)+"/graphql", json={'query':query})
+    response = requests.post("http://localhost:"+str(port)+"/graphql", json={'query':query})
     dataResponse = response.json()
     return dataResponse["data"]
 
@@ -147,12 +147,12 @@ def getPlayerId(_token):
     response = responseHttp(PORT_AUTH, query)
     return response["getId"]
 
-# ----------------- PLAYER API REQUESTS -----------------------------
-
 def playerExist(_token):
     query = "query{playerExist(_token:\""+_token+"\"){ response,error}}"
-    response = responseHttp(PORT_PLAYER, query)
+    response = responseHttp(PORT_AUTH, query)
     return response["playerExist"]
+
+# ----------------- PLAYER API REQUESTS -----------------------------
 
 def getPokemons(_token):
     query = "query{getPersonalInformation(_token:\""+_token+"\"){player{pokemons{id}},error}}"
@@ -160,6 +160,22 @@ def getPokemons(_token):
     return response["getPersonalInformation"]
 
 # ----------------- MATCH API RESOLVER  -----------------------------
+
+def getInvitations(_,info,_token):
+    isPlayer, errorMessage = playerExist(_token)
+    if isPlayer:
+        playerId = getPlayerId(_token)
+        db = sqlite3.connect(DB_PATH)
+        cursor = db.cursor()
+        cursor.execute("""SELECT sender, receiver, id FROM matchs WHERE status = 0 AND (receiver = ? OR ((receiver is NULL) AND sender != ?)) ORDER BY receiver DESC""", (playerId,playerId))
+        allInvitations = cursor.fetchall()
+        invitationsData = []
+        for invitation in allInvitations:
+            sender, receiver, id = invitation
+            invitationsData.append({"sender": sender, "receiver": receiver, "matchId": id})
+        return {"invitations": invitationsData}
+    else:
+        return {"error": errorMessage} 
 
 def getMatch(_, info, _token, _matchId):
     responsePlayerExist = playerExist(_token)
@@ -170,8 +186,7 @@ def getMatch(_, info, _token, _matchId):
         cursor.execute("""SELECT * FROM matchs WHERE id = ?""",(_matchId,))
         matchData = cursor.fetchone()
         if matchData:
-            id, sender, receiver, statusInt, winner = matchData
-            status = ["sent", "accepted", "started", "finished"][statusInt]
+            id, sender, receiver, status, winner = matchData
             match = {"id":id,"status":status, "sender":sender, "receiver":receiver, "winner": winner}
             return {"match": match}
         else:
@@ -217,7 +232,7 @@ def getRoundsFromMatchId(_, info, _token, _matchId):
     else:
         return {"error": errorMessage}
 
-def createMatch(_,info, _token, _receiverId):
+def createMatch(_,info, _token, _receiverId=None):
     responsePlayerExist = playerExist(_token)
     isPlayer, errorMessage = responsePlayerExist["response"], responsePlayerExist["error"]
     if isPlayer:
