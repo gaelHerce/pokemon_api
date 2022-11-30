@@ -13,8 +13,8 @@ app = Flask(__name__)
 
 ### DATABASE
 
-SQL_PATH = "store_api/db/init.sql"
-DB_PATH = "store_api/db/database.db"
+SQL_PATH = "init.sql"
+DB_PATH = "database.db"
 
 def create_db(sql_path, db_path):
     os.remove(DB_PATH)
@@ -32,7 +32,7 @@ def create_db(sql_path, db_path):
 #
 ###
 
-type_defs = load_schema_from_path('store_api/store.graphql')
+type_defs = load_schema_from_path('store.graphql')
 
 query = QueryType()
 query.set_field('getAvailablePokemons', r.getAvailablePokemons)

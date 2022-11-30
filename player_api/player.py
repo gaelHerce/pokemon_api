@@ -14,8 +14,8 @@ app = Flask(__name__)
 
 ### DATABASE
 
-SQL_PATH = "player_api/db/init.sql"
-DB_PATH = "player_api/db/database.db"
+SQL_PATH = "init.sql"
+DB_PATH = "database.db"
 
 def create_db(sql_path, db_path):
     os.remove(DB_PATH)
@@ -31,7 +31,7 @@ def create_db(sql_path, db_path):
 
 ####################
 
-type_defs = load_schema_from_path('player_api/player.graphql')
+type_defs = load_schema_from_path('player.graphql')
 
 query = QueryType()
 query.set_field('getPlayerList', r.getPlayerList)

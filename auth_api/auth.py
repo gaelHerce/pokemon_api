@@ -13,8 +13,8 @@ app = Flask(__name__)
 
 ### DATABASE
 
-SQL_PATH = "auth_api/db/init.sql"
-DB_PATH = "auth_api/db/database.db"
+SQL_PATH = "init.sql"
+DB_PATH = "database.db"
 
 def create_db(sql_path, db_path):
     os.remove(DB_PATH)
@@ -32,7 +32,7 @@ def create_db(sql_path, db_path):
 #
 ###
 
-type_defs = load_schema_from_path('auth_api/account.graphql')
+type_defs = load_schema_from_path('account.graphql')
 
 query = QueryType()
 query.set_field('getId', r.getId)

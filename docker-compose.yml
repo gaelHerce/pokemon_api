@@ -1,19 +1,23 @@
-version: "3.9"
+version: '3.8'
+
 services:
-  movie:
-    build: ./auth_api/
+  auth-api:
+    build: auth_api
+    container_name: auth
     ports:
       - "3001:3001"
-  showtime:
-    build: ./store_api/
+  store-api:
+    build: ./store_api
+    container_name: store
     ports:
       - "3002:3002"
-  booking:
-    build: ./player_api/
+  player-api:
+    build: ./player_api
+    container_name: player
     ports:
       - "3003:3003"
-  user:
-    build: ./match_api/
+  match-api:
+    build: ./match_api
+    container_name: match
     ports:
-        - "3004:3004"
-
+      - "3004:3004"

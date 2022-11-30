@@ -1,11 +1,11 @@
 import sqlite3
 import requests
 
-DB_PATH = "player_api/db/database.db"
+DB_PATH = "database.db"
 PORT_AUTH = 3001
 
 def responseHttp(port, query):
-    response = requests.post("http://localhost:"+str(port)+"/graphql", json={'query':query})
+    response = requests.post("http://auth:"+str(port)+"/graphql", json={'query':query})
     dataResponse = response.json()
     print(dataResponse)
     return dataResponse["data"]

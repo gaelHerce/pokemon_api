@@ -1,4 +1,9 @@
-FROM python:3.8-alpine
-WORKDIR /app
-ADD . /app/
-CMD ["python","-u","match.py"]
+FROM python:3.10 
+# Or any preferred Python version.
+ADD match.py .
+ADD resolvers.py .
+ADD match.graphql .
+ADD db/database.db .
+ADD db/init.sql .
+RUN pip install requests beautifulsoup4 python-dotenv ariadne flask resolver uuid
+CMD ["python", "./match.py"] 

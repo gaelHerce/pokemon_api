@@ -4,10 +4,15 @@ import requests
 
 PORT_AUTH = 3001
 PORT_PLAYER = 3003
-DB_PATH = "store_api/db/database.db"
+DB_PATH = "database.db"
 
 def responseHttp(port, query):
-    response = requests.post("http://localhost:"+str(port)+"/graphql", json={'query':query})
+    host = ""
+    if port == PORT_AUTH:
+        host = "auth"
+    elif port == PORT_PLAYER:
+        host = "player"
+    response = requests.post("http://"+host+":"+str(port)+"/graphql", json={'query':query})
     dataResponse = response.json()
     return dataResponse["data"]
 

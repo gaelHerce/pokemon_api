@@ -13,8 +13,8 @@ app = Flask(__name__)
 
 ### DATABASE
 
-SQL_PATH = "match_api/db/init.sql"
-DB_PATH = "match_api/db/database.db"
+SQL_PATH = "init.sql"
+DB_PATH = "database.db"
 
 def create_db(sql_path, db_path):
     os.remove(DB_PATH)
@@ -32,7 +32,7 @@ def create_db(sql_path, db_path):
 #
 ###
 
-type_defs = load_schema_from_path('match_api/match.graphql')
+type_defs = load_schema_from_path('match.graphql')
 
 query = QueryType()
 query.set_field('getMatchList', r.getMatchList)
