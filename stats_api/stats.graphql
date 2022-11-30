@@ -3,10 +3,10 @@ type Query{
 }
 
 type Mutation{
-    match_over(matchId:Match!):String
+    match_over(matchId:Int!):String
     reset_stats(token:String!):String
-    player_score_changed(token: String!, playerId:PlayerId!, newScore:Int!):String
-    update_player_badges(playerId:PlayerId):String
+    player_score_changed(token: String!, playerId:Int!, newScore:Int!):String
+    update_player_badges(playerId:Int):String
 }
 
 type Statistics{
