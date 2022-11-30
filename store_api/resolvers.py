@@ -4,7 +4,7 @@ import requests
 
 PORT_AUTH = 3001
 PORT_PLAYER = 3003
-DB_PATH = "db/database.db"
+DB_PATH = "store_api/db/database.db"
 
 def responseHttp(port, query):
     response = requests.post("http://0.0.0.0:"+str(port)+"/graphql", json={'query':query})
@@ -46,7 +46,7 @@ def addPokemon(_token, pokemon):
 def buyPokemon(_,info, _token, _pokemonId):
     db = sqlite3.connect(DB_PATH)
     cursor = db.cursor()
-    cursor.execute("""SELECT quantity, price FROM store JOIN pokemons ON store.pokemon == pokemons.id WHERE pokemons.id = ?""",(_pokemonId,))
+    cursor.execute("""SELECT quantity, price FROM store WHERE pokemon = ?""",(_pokemonId,))
     response = cursor.fetchone()
     quantity, price = response[0], response[1]
     playerCredits = getCredits(_token)

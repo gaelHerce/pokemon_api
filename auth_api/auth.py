@@ -13,8 +13,8 @@ app = Flask(__name__)
 
 ### DATABASE
 
-SQL_PATH = "db/init.sql"
-DB_PATH = "db/database.db"
+SQL_PATH = "auth_api/db/init.sql"
+DB_PATH = "auth_api/db/database.db"
 
 def create_db(sql_path, db_path):
     os.remove(DB_PATH)

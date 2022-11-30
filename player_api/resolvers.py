@@ -1,7 +1,7 @@
 import sqlite3
 import requests
 
-DB_PATH = "db/database.db"
+DB_PATH = "player_api/db/database.db"
 PORT_AUTH = 3001
 
 def responseHttp(port, query):
@@ -71,6 +71,17 @@ def getPersonalInformation(_,info,_token):
         id, userName, credits = player
         player = {"player":{"id": id, "userName": userName, "credits": credits, "badges": getBadges(id)["badges"], "pokemons": getPokemons(_token)["pokemons"]}}
         return player
+    else:
+        return {"error": errorMessage}
+
+def getPokemonInfo(_,info, _token, _pokemonId):
+    playerExist, errorMessage = isPlayer(_token)
+    if playerExist:
+        db = sqlite3.connect(DB_PATH)
+        cursor = db.cursor()
+        cursor.execute("""SELECT pokemon_owners.id, pokemons.name, pokemons.type, pokemons.att, pokemons.pv FROM pokemons INNER JOIN pokemon_owners ON pokemons.id = pokemon_owners.pokemon WHERE pokemon_owners.id = ?""", (_pokemonId,))
+        pokemon = cursor.fetchone()
+        return {"id": pokemon[0], "name": pokemon[1], "type": pokemon[2], "pv": pokemon[3], "att": pokemon[4]}
     else:
         return {"error": errorMessage}
 

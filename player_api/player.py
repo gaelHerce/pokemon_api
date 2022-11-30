@@ -11,6 +11,24 @@ HOST = '0.0.0.0'
 
 app = Flask(__name__)
 
+### DATABASE
+
+SQL_PATH = "player_api/db/init.sql"
+DB_PATH = "player_api/db/database.db"
+
+def create_db(sql_path, db_path):
+    with open(sql_path, 'r') as inp:
+        sql_script = inp.read()
+    inp.close()
+
+    db = sqlite3.connect(db_path)
+    cursor = db.cursor()
+    cursor.executescript(sql_script)
+    db.commit()
+    db.close()
+
+####################
+
 type_defs = load_schema_from_path('player_api/player.graphql')
 
 query = QueryType()
@@ -20,6 +38,7 @@ query.set_field('getConversation', r.getConversation)
 query.set_field('getReceivedMessages', r.getReceivedMessages)
 query.set_field('getInvitations', r.getInvitations)
 query.set_field('playerExist', r.playerExist)
+query.set_field('getPokemonInfo', r.getPokemonInfo)
 
 mutation = MutationType()
 mutation.set_field('changeUserName', r.changeUserName)
@@ -57,4 +76,5 @@ def graphql_server():
 
 if __name__ == "__main__":
     print("Server running in port %s"%(PORT))
+    create_db(SQL_PATH, DB_PATH)
     app.run(host=HOST, port=PORT)

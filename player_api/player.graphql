@@ -13,6 +13,7 @@ type Query{
     getReceivedMessages(_token: String!): MessagesResult
     getInvitations(_token: String!): InvitationsResult
     playerExist(_token: String!): BoolResult
+    getPokemonInfo(_token: String!, _pokemonId: Int!): PokemonResult
 }
 
 type BoolResult{
@@ -73,6 +74,11 @@ type Player{
     credits: Int!
     badges: [Badge]!
     pokemons: [Pokemon]
+}
+
+type PokemonResult{
+    pokemon: Pokemon
+    error: String!
 }
 
 type Pokemon {

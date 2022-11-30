@@ -1,9 +1,7 @@
 import sqlite3
 from uuid import uuid4
 
-DB_PATH = "db/database.db"
-
-CONNECTED = False
+DB_PATH = "auth_api/db/database.db"
 
 def createAccount(_,info,_role,_userName,_pwd):
     db = sqlite3.connect(DB_PATH)

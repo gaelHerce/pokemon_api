@@ -1,7 +1,7 @@
 import sqlite3
 import requests
 
-DB_PATH = "db/database.db"
+DB_PATH = "match_api/db/database.db"
 PORT_AUTH = 3001
 PORT_PLAYER = 3003
 
